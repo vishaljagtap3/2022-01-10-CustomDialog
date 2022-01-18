@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 LoginDialog loginDialog = new LoginDialog(MainActivity.this);
+                //loginDialog.setMyLoginListener(new MyLoginListener());
                 loginDialog.show();
 
             }

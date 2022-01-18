@@ -17,13 +17,17 @@ public class LoginDialog extends Dialog {
 
     private Context context;
 
+    private MyLoginListener listener;
+
+    public void setMyLoginListener(MyLoginListener listener) {
+        this.listener = listener;
+    }
+
     public LoginDialog(@NonNull Context context) {
         super(context);
 
         this.context = context;
-
         setContentView(R.layout.login_dialog);
-
         init();
     }
 
@@ -38,14 +42,16 @@ public class LoginDialog extends Dialog {
     private class BtnLoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+
+            if(listener == null) {
+                return;
+            }
+
             if(edtPassword.getText().toString().equals("1111") && edtUsername.getText().toString().equals("bitcode")) {
-                context.startActivity(
-                        new Intent(context, HomeActivity.class)
-                );
-                dismiss();
+                listener.success(LoginDialog.this);
             }
             else {
-                Toast.makeText(context, "Login failed!", Toast.LENGTH_LONG).show();
+                listener.fail(LoginDialog.this);
             }
         }
     }
