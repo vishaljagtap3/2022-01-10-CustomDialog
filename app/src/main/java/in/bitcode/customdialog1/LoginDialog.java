@@ -17,10 +17,17 @@ public class LoginDialog extends Dialog {
 
     private Context context;
 
-    private MyLoginListener listener;
+    public interface OnLoginListener {
+        void success(LoginDialog loginDialog);
+        void fail(LoginDialog loginDialog);
 
-    public void setMyLoginListener(MyLoginListener listener) {
-        this.listener = listener;
+        //void onResult(LoginDialog loginDialog, boolean success);
+    }
+
+    private OnLoginListener onLoginListener;
+
+    public void setOnLoginListener(OnLoginListener onLoginListener) {
+        this.onLoginListener = onLoginListener;
     }
 
     public LoginDialog(@NonNull Context context) {
@@ -43,15 +50,15 @@ public class LoginDialog extends Dialog {
         @Override
         public void onClick(View v) {
 
-            if(listener == null) {
+            if(onLoginListener == null) {
                 return;
             }
 
             if(edtPassword.getText().toString().equals("1111") && edtUsername.getText().toString().equals("bitcode")) {
-                listener.success(LoginDialog.this);
+                onLoginListener.success(LoginDialog.this);
             }
             else {
-                listener.fail(LoginDialog.this);
+                onLoginListener.fail(LoginDialog.this);
             }
         }
     }
